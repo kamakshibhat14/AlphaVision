@@ -4,7 +4,6 @@ import api from "../services/api";
 function Detect() {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState("");
-  const [error, setError] = useState("");
 
   const detect = async () => {
     if (!file) {
@@ -12,47 +11,31 @@ function Detect() {
       return;
     }
 
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
+    const formData = new FormData();
+    formData.append("image", file);
 
-      const res = await api.post("/detect", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setResult(res.data.detected_alphabet);
-      setError("");
-    } catch (err) {
-      if (err.response?.status === 401) {
-        setError("❌ Please login first");
-      } else {
-        setError("❌ Detection failed");
-      }
-    }
+    const res = await api.post("/detect", formData);
+    setResult(res.data.detected_alphabet);
   };
 
   return (
     <div className="page-center">
-      <div className="card">
+      <div className="card detect-card">
         <h2>Upload Image</h2>
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+        <input type="file" onChange={(e) => {
+          setFile(e.target.files[0]);
+          setResult("");
+        }} />
 
         <button onClick={detect}>Detect Alphabet</button>
 
         {result && (
-          <div className="result">
-            Detected Alphabet: <strong>{result}</strong>
+          <div className="detect-result-box">
+            <span>Detected Alphabet:</span>
+            <strong>{result}</strong>
           </div>
         )}
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
     </div>
   );
