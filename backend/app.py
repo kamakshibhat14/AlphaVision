@@ -2,7 +2,7 @@ print("APP.PY IS RUNNING")
 
 from flask import Flask, request, jsonify, session
 from flask_cors import CORS
-from pymongo import MongoClient
+from database import users_collection, detections_collection
 from PIL import Image
 from datetime import datetime
 import os
@@ -15,20 +15,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret")
 
-CORS(app, supports_credentials=True)
+app.config.update(
+    SESSION_COOKIE_SAMESITE="None",
+    SESSION_COOKIE_SECURE=False  
+)
+
+CORS(
+    app,
+    supports_credentials=True,
+    origins=["http://localhost:3000"]  
+)
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-# --------------------------------------------------
-# MongoDB Configuration
-# --------------------------------------------------
-
-client = MongoClient("mongodb://localhost:27017/")
-db = client["alphabet_recognition_db"]
-
-users_collection = db["users"]
-detections_collection = db["detections"]
 
 # --------------------------------------------------
 # Authentication APIs
@@ -42,16 +41,12 @@ def login():
 
     user = users_collection.find_one({"email": email})
 
-    if not user:
+    if not user or user["password"] != password:
         return jsonify({"error": "Invalid credentials"}), 401
 
-    if not check_password_hash(user["password"], password):
-        return jsonify({"error": "Invalid credentials"}), 401
-
-    # ✅ SESSION SET CORRECTLY
     session["user"] = email
-
     return jsonify({"message": "Login successful"})
+
 
 
 @app.route("/signup", methods=["POST"])
@@ -63,14 +58,13 @@ def signup():
     if users_collection.find_one({"email": email}):
         return jsonify({"error": "User already exists"}), 400
 
-    hashed_password = generate_password_hash(password)
-
     users_collection.insert_one({
         "email": email,
-        "password": hashed_password
+        "password": password
     })
 
     return jsonify({"message": "Signup successful"})
+
 
 
 @app.route("/logout", methods=["POST"])

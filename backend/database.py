@@ -9,4 +9,6 @@ if not MONGO_URI:
 client = MongoClient(MONGO_URI)
 
 db = client["alphabetDB"]
+
 users_collection = db["users"]
+detections_collection = db["detections"]
