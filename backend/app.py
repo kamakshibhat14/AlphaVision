@@ -25,7 +25,7 @@ CORS(
     supports_credentials=True,
     origins=[
         "http://localhost:3000",
-        "https://alphavision-frontend.onrender.com"  # frontend render URL (add later)
+        "https://frontend-alphavision.onrender.com"
     ]
 )
 
