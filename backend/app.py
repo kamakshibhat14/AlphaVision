@@ -5,6 +5,7 @@ from flask_cors import CORS
 from pymongo import MongoClient
 from PIL import Image
 from datetime import datetime
+from database import users_collection, detections_collection
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
 
