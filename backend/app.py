@@ -13,11 +13,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # --------------------------------------------------
 
 app = Flask(__name__)
-app.secret_key = "alphabet_secret_key"
+app.secret_key = os.environ.get("SECRET_KEY", "alphabet_secret_key")
 
-app.config["SESSION_COOKIE_SAMESITE"] = "None"
-app.config["SESSION_COOKIE_SECURE"] = False  # True only after HTTPS deploy
-
+app.config.update(
+    SESSION_COOKIE_SAMESITE="None",
+    SESSION_COOKIE_SECURE=True
+)
 
 CORS(
     app,
