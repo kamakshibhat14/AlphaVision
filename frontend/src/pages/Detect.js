@@ -14,8 +14,12 @@ function Detect() {
     const formData = new FormData();
     formData.append("image", file);
 
-    const res = await api.post("/detect", formData);
-
+    const res = await api.post("/detect", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,   // ⭐ THIS LINE FIXES 401
+    });
 
     setResult(res.data.detected_alphabet);
   };
