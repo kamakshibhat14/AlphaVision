@@ -1,5 +1,6 @@
 Flask
 flask-cors
 pymongo
-Pillow
 gunicorn
+python-dotenv
+werkzeug
