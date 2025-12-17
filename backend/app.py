@@ -15,7 +15,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "alphabet_secret_key"
 
-CORS(app, supports_credentials=True)
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = False  # True only after HTTPS deploy
+
+
+CORS(
+    app,
+    supports_credentials=True,
+    origins=["http://localhost:3000"]
+)
+
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -25,7 +34,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # --------------------------------------------------
 
 client = MongoClient("mongodb://localhost:27017/")
-db = client["alphabet_recognition_db"]
+db = client["alphabetDB"]
 
 users_collection = db["users"]
 detections_collection = db["detections"]
