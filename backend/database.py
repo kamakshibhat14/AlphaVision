@@ -11,7 +11,7 @@ MONGO_URI = os.environ.get(
 client = MongoClient(MONGO_URI)
 
 # Database name (you can keep this)
-db = client["alphabet_recognition_db"]
+db = client["alphabetDB"]
 
 users_collection = db["users"]
 detections_collection = db["detections"]
