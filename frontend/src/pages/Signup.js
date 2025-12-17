@@ -9,13 +9,14 @@ function Signup() {
 
   const handleSignup = async () => {
     try {
-        const res = await api.post("/signup", { email, password });
-        alert(res.data.message);
-        navigate("/login");
-      } catch (err) {
-        alert(err.response?.data?.error || "Signup failed");
-      }
-
+      await api.post("/signup", { email, password });
+      alert("Signup successful. Please login.");
+      navigate("/");
+    } catch (err) {
+      alert(
+        err.response?.data?.message || "Signup failed"
+      );
+    }
   };
 
   return (

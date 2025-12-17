@@ -15,6 +15,8 @@ function Detect() {
     formData.append("image", file);
 
     const res = await api.post("/detect", formData);
+
+
     setResult(res.data.detected_alphabet);
   };
 
