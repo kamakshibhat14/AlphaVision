@@ -23,7 +23,9 @@ app.config.update(
 CORS(
     app,
     supports_credentials=True,
-    origins=["*"]
+    origins=[
+        "https://alphavision.vercel.app"   # 👈 your Vercel URL
+    ]
 )
 
 UPLOAD_FOLDER = "uploads"
