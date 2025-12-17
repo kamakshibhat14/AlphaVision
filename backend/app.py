@@ -23,10 +23,7 @@ app.config.update(
 CORS(
     app,
     supports_credentials=True,
-    origins=[
-        "http://localhost:3000",
-        "https://frontend-alphavision.onrender.com"
-    ]
+    origins=["*"]
 )
 
 UPLOAD_FOLDER = "uploads"
