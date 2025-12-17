@@ -22,9 +22,11 @@ app.config["SESSION_COOKIE_SECURE"] = False  # True only after HTTPS deploy
 CORS(
     app,
     supports_credentials=True,
-    origins=["http://localhost:3000"]
+    origins=[
+        "http://localhost:3000",
+        "https://alphavision-frontend.onrender.com"  # frontend render URL (add later)
+    ]
 )
-
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
