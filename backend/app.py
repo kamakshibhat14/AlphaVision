@@ -13,7 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # --------------------------------------------------
 
 app = Flask(__name__)
-app.secret_key = "alphabet_secret_key"
+app.secret_key = os.environ.get("SECRET_KEY", "dev-secret")
 
 CORS(app, supports_credentials=True)
 
