@@ -6,7 +6,8 @@ function History() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get("/history")
+    api
+      .get("/history", { withCredentials: true })
       .then((res) => {
         setHistory(res.data);
         setLoading(false);
@@ -22,9 +23,18 @@ function History() {
       <div className="card history-card">
         <h2>Detection History</h2>
 
-        {history.length === 0 ? (
-          <p className="no-history">No user history found</p>
-        ) : (
+        {/* Loading */}
+        {loading && <p>Loading history...</p>}
+
+        {/* No history */}
+        {!loading && history.length === 0 && (
+          <p style={{ textAlign: "center", marginTop: "20px", color: "#888" }}>
+            No user history found
+          </p>
+        )}
+
+        {/* History Table */}
+        {!loading && history.length > 0 && (
           <table className="history-table">
             <thead>
               <tr>
@@ -34,6 +44,7 @@ function History() {
                 <th>Date & Time</th>
               </tr>
             </thead>
+
             <tbody>
               {history.map((h, index) => (
                 <tr key={index}>
@@ -48,8 +59,6 @@ function History() {
         )}
       </div>
     </div>
-
-
   );
 }
 
