@@ -11,11 +11,13 @@ function Login({ onLogin }) {
 
   const handleLogin = async () => {
     try {
-      await api.post("/login", { email, password });
-      onLogin(true);
-    } catch {
-      alert("Invalid credentials");
+      const res = await api.post("/login", { email, password });
+      alert(res.data.message);
+      navigate("/detect");
+    } catch (err) {
+      alert(err.response?.data?.error || "Login failed");
     }
+
   };
 
   return (
