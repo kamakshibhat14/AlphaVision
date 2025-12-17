@@ -2,7 +2,6 @@ print("APP.PY IS RUNNING")
 
 from flask import Flask, request, jsonify, session
 from flask_cors import CORS
-from pymongo import MongoClient
 from PIL import Image
 from datetime import datetime
 from database import users_collection, detections_collection
@@ -29,16 +28,6 @@ CORS(
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-# --------------------------------------------------
-# MongoDB Configuration
-# --------------------------------------------------
-
-client = MongoClient("mongodb://localhost:27017/")
-db = client["alphabetDB"]
-
-users_collection = db["users"]
-detections_collection = db["detections"]
 
 # --------------------------------------------------
 # Authentication APIs
