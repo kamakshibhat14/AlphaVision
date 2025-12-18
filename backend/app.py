@@ -77,64 +77,34 @@ def logout():
 
 
 def detect_alphabet(image_path):
+    from PIL import Image
     import os
 
-    filename = os.path.basename(image_path).lower()
+ 
+    img = Image.open(image_path).convert("L")  # grayscale
+    width, height = img.size
+    aspect_ratio = round(width / height, 2)
 
-    if filename.startswith("a"):
-        return "A"
-    elif filename.startswith("b"):
-        return "B"
-    elif filename.startswith("c"):
-        return "C"
-    elif filename.startswith("d"):
-        return "D"
-    elif filename.startswith("e"):
-        return "E"
-    elif filename.startswith("f"):
-        return "F"
-    elif filename.startswith("g"):
-        return "G"
-    elif filename.startswith("h"):
-        return "H"
-    elif filename.startswith("i"):
-        return "I"
-    elif filename.startswith("j"):
-        return "J"
-    elif filename.startswith("k"):
-        return "K"
-    elif filename.startswith("l"):
-        return "L"
-    elif filename.startswith("m"):
-        return "M"
-    elif filename.startswith("n"):
-        return "N"
-    elif filename.startswith("o"):
-        return "O"
-    elif filename.startswith("p"):
-        return "P"
-    elif filename.startswith("q"):
-        return "Q"
-    elif filename.startswith("r"):
-        return "R"
-    elif filename.startswith("s"):
-        return "S"
-    elif filename.startswith("t"):
-        return "T"
-    elif filename.startswith("u"):
-        return "U"
-    elif filename.startswith("v"):
-        return "V"
-    elif filename.startswith("w"):
-        return "W"
-    elif filename.startswith("x"):
-        return "X"
-    elif filename.startswith("y"):
-        return "Y"
-    elif filename.startswith("z"):
-        return "Z"
-    else:
-        return "Unknown"
+    pixels = list(img.getdata())
+    avg_brightness = sum(pixels) / len(pixels)
+
+    file_size_kb = os.path.getsize(image_path) / 1024
+
+    # ---- RULE-BASED SIMULATION ----
+    # Feature buckets
+    ratio_bucket = int(aspect_ratio * 10) % 10
+    brightness_bucket = int(avg_brightness // 10)
+    size_bucket = int(file_size_kb // 20)
+
+    rule_value = (ratio_bucket + brightness_bucket + size_bucket) % 26
+
+    alphabets = [
+        "A","B","C","D","E","F","G","H","I","J",
+        "K","L","M","N","O","P","Q","R","S","T",
+        "U","V","W","X","Y","Z"
+    ]
+
+    return alphabets[rule_value]
 
 
 @app.route("/detect", methods=["POST"])
