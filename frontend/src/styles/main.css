@@ -291,28 +291,39 @@ button:hover {
     }
 }
 
+/* ✅ MOBILE VIEW — EXACTLY LIKE FIRST IMAGE */
 @media (max-width: 768px) {
+
     .navbar {
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
         padding: 12px 16px;
+        gap: 6px;
+    }
+
+    .navbar-logo {
+        width: 100%;
+        text-align: center;
+        font-size: 1.4rem;
     }
 
     .navbar-menu {
-        flex: 1;
+        width: 100%;
         display: flex;
         justify-content: center;
         gap: 22px;
+        position: relative;
     }
 
     .nav-logout {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
         width: auto;
         padding: 6px 14px;
         font-size: 0.85rem;
         border-radius: 6px;
-        margin-left: auto;
-        position: static;
-        transform: none;
     }
 
     .content-wrapper {
@@ -331,5 +342,3 @@ button:hover {
         white-space: normal;
     }
 }
-
-
