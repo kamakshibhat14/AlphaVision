@@ -398,23 +398,12 @@ button:hover {
 .nav-logout {
     margin-top: 0;
     align-self: center;
-}
-
-.navbar-menu a,
-.nav-logout {
     font-size: inherit;
 }
 
-.nav-logout {
-    align-self: center;
-    margin-top: 0;
-}
 
-.navbar img,
-.navbar .logo,
-.navbar .navbar-logo {
-    display: none;
-}
+
+
 
 
 
