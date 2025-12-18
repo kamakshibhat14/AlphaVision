@@ -1,16 +1,13 @@
 import os
 from pymongo import MongoClient
 
-# MongoDB Atlas URI
-MONGO_URI = os.environ.get(
-    "MONGO_URI",
-    "mongodb+srv://Alphabet:alphabet@cluster0.sjk1p4v.mongodb.net/?appName=Cluster0"
+MONGO_URI = os.environ.get("MONGO_URI")
 
-)
+if not MONGO_URI:
+    raise Exception("MONGO_URI environment variable not set")
 
 client = MongoClient(MONGO_URI)
 
-# Database name (you can keep this)
 db = client["alphabetDB"]
 
 users_collection = db["users"]
