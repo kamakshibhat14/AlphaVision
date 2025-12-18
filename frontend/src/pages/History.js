@@ -61,7 +61,13 @@ function History() {
 
 
                   <td>{h.detected_alphabet}</td>
-                  <td>{h.timestamp}</td>
+                  <td
+                    data-date={h.timestamp.split(" ")[0]}
+                    data-time={h.timestamp.split(" ")[1]}
+                  >
+                    {h.timestamp}
+                  </td>
+
                 </tr>
               ))}
             </tbody>
