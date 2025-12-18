@@ -1,4 +1,4 @@
- body {
+body {
     font-family: 'Segoe UI', Roboto, Arial, sans-serif;
     background: #f4f7fb;
     color: #2b2b2b;
@@ -385,6 +385,7 @@ button:hover {
         align-self: center;
     }
 }
+
 .navbar {
     align-items: center;
 }
@@ -398,3 +399,7 @@ button:hover {
     margin-top: 0;
     align-self: center;
 }
+
+
+
+
