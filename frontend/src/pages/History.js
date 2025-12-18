@@ -23,24 +23,24 @@ function History() {
       <div className="card history-card">
         <h2>Detection History</h2>
 
-        {/* Loading */}
+        
         {loading && <p>Loading history...</p>}
 
-        {/* No history */}
+        
         {!loading && history.length === 0 && (
           <p style={{ textAlign: "center", marginTop: "20px", color: "#888" }}>
             No user history found
           </p>
         )}
 
-        {/* History Table */}
+        
         {!loading && history.length > 0 && (
           <table className="history-table">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Image Name</th>
-                <th>Detected Alphabet</th>
+                <th>Detected <br> Alphabet</th>
                 <th>Date & Time</th>
               </tr>
             </thead>
