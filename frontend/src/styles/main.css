@@ -455,6 +455,47 @@ button:hover {
     object-fit: contain;
 }
 
+@media (max-width: 768px) {
+
+    .history-table {
+        display: block;
+        border: none;
+    }
+
+    .history-table thead {
+        display: none;
+    }
+
+    .history-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .history-table tr {
+        display: block;
+        background: #ffffff;
+        margin-bottom: 16px;
+        border-radius: 14px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        padding: 14px 16px;
+    }
+
+    .history-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border: none;
+        font-size: 14px;
+    }
+
+    .history-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #4f46e5;
+    }
+}
+
 
 
 
