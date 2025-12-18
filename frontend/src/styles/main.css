@@ -271,26 +271,32 @@ button:hover {
     }
 
     .navbar-logo {
-        font-size: 1.8rem;
+        width: 100%;
+        font-size: 1.6rem;
         justify-content: center;
+        margin-bottom: 6px;
     }
+
 
     .navbar-menu {
         width: 100%;
+        display: flex;
         justify-content: center;
-        position: relative;
-        margin-top: 6px;
+        align-items: center;
+        gap: 18px;
+        position: static;
+        margin-top: 4px;
     }
 
+
     .nav-logout {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
+        position: static;
+        transform: none;
         padding: 6px 14px;
         font-size: 0.85rem;
         border-radius: 6px;
     }
+
 
     .content-wrapper {
         background: #ffffff;
@@ -315,4 +321,10 @@ button:hover {
         content: attr(data-date) "\A" attr(data-time);
         white-space: pre-line;
     }
+
 }
+
+
+
+
+
