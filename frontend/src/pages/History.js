@@ -40,7 +40,7 @@ function History() {
               <tr>
                 <th>ID</th>
                 <th>Image Name</th>
-                <th>Detected <br /> Alpha</th>
+                <th>Letter <br /> Alpha</th>
                 <th>Date & Time</th>
               </tr>
             </thead>
