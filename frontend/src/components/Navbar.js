@@ -13,9 +13,9 @@ function Navbar({ setLoggedIn }) {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        🔤 <span>AlphaVision</span>
-    </div>
-
+          <img src="/favicon-32x32.png" alt="AV Logo" className="nav-logo-img" />
+          <span>AlphaVision</span>
+      </div>
 
       <ul className="navbar-menu">
         <li>
