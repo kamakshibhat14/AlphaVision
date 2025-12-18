@@ -402,10 +402,6 @@ button:hover {
     font-weight: 500;
 }
 
-.navbar-logo span:first-child {
-    display: none;
-}
-
 @media (max-width: 768px) {
     .navbar {
         flex-direction: row;
