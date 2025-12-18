@@ -10,9 +10,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask import send_from_directory
 from flask import request
 
-# --------------------------------------------------
-# Flask App Configuration
-# --------------------------------------------------
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "alphabet_secret_key")
@@ -33,9 +30,6 @@ CORS(
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# --------------------------------------------------
-# Authentication APIs
-# --------------------------------------------------
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -82,9 +76,6 @@ def logout():
     return jsonify({"message": "Logged out successfully"})
 
 
-# --------------------------------------------------
-# Rule-Based Alphabet Detection Logic
-# --------------------------------------------------
 def detect_alphabet(image_path):
     """
     Rule-based alphabet detection (A–Z)
@@ -150,9 +141,6 @@ def detect_alphabet(image_path):
     else:
         return "Unknown"
 
-# --------------------------------------------------
-# Alphabet Detection API
-# --------------------------------------------------
 
 @app.route("/detect", methods=["POST"])
 def detect():
@@ -189,9 +177,6 @@ def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
 
-# --------------------------------------------------
-# Detection History API
-# --------------------------------------------------
 @app.route("/history", methods=["GET"])
 def history():
     if "user" not in session:
@@ -211,9 +196,6 @@ def history():
     return jsonify(history_data)
 
 
-# --------------------------------------------------
-# Run Server
-# --------------------------------------------------
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
