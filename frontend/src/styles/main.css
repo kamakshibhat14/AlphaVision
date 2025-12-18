@@ -385,3 +385,17 @@ button:hover {
         align-self: center;
     }
 }
+.navbar {
+    align-items: center;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logout {
+    margin-top: 0;
+    align-self: center;
+}
+
