@@ -293,17 +293,18 @@ button:hover {
 
 @media (max-width: 768px) {
     .navbar {
-        flex-direction: column;
-        padding: 14px 20px;
-        gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 16px;
     }
 
     .navbar-menu {
-        width: 100%;
+        flex: 1;
+        display: flex;
         justify-content: center;
-        position: relative;
+        gap: 22px;
     }
-    
+
     .nav-logout {
         width: auto;
         padding: 6px 14px;
@@ -330,3 +331,5 @@ button:hover {
         white-space: normal;
     }
 }
+
+
