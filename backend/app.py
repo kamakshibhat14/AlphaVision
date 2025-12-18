@@ -78,33 +78,26 @@ def logout():
 
 def detect_alphabet(image_path):
     from PIL import Image
-    import os
+    import numpy as np
 
- 
-    img = Image.open(image_path).convert("L")  # grayscale
+    img = Image.open(image_path).convert("L")
     width, height = img.size
-    aspect_ratio = round(width / height, 2)
+    aspect_ratio = width / height
 
-    pixels = list(img.getdata())
-    avg_brightness = sum(pixels) / len(pixels)
+    pixels = np.array(img)
+    avg_brightness = pixels.mean()
+    contrast = pixels.std()
 
-    file_size_kb = os.path.getsize(image_path) / 1024
+    alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-    # ---- RULE-BASED SIMULATION ----
-    # Feature buckets
-    ratio_bucket = int(aspect_ratio * 10) % 10
-    brightness_bucket = int(avg_brightness // 10)
-    size_bucket = int(file_size_kb // 20)
+    # Rule buckets (simulation)
+    ratio_bucket = int(aspect_ratio * 10) % 7
+    brightness_bucket = int(avg_brightness // 20)
+    contrast_bucket = int(contrast // 15)
 
-    rule_value = (ratio_bucket + brightness_bucket + size_bucket) % 26
+    rule_index = (ratio_bucket + brightness_bucket + contrast_bucket) % 26
 
-    alphabets = [
-        "A","B","C","D","E","F","G","H","I","J",
-        "K","L","M","N","O","P","Q","R","S","T",
-        "U","V","W","X","Y","Z"
-    ]
-
-    return alphabets[rule_value]
+    return alphabets[rule_index]
 
 
 @app.route("/detect", methods=["POST"])
