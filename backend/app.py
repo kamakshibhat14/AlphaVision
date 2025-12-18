@@ -150,11 +150,6 @@ def detect_alphabet(image_path):
     else:
         return "Unknown"
 
-
-@app.route("/uploads/<filename>")
-def uploaded_file(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
-
 # --------------------------------------------------
 # Alphabet Detection API
 # --------------------------------------------------
@@ -188,6 +183,10 @@ def detect():
     return jsonify({
         "detected_alphabet": detected_alphabet
     })
+
+@app.route("/uploads/<filename>")
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 
 # --------------------------------------------------
