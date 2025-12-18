@@ -27,9 +27,9 @@ CORS(
     ]
 )
 
-UPLOAD_FOLDER = "uploads"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -77,11 +77,6 @@ def logout():
 
 
 def detect_alphabet(image_path):
-    """
-    Rule-based alphabet detection (A–Z)
-    No ML, no training – purely predefined logic
-    """
-
     import os
 
     filename = os.path.basename(image_path).lower()
@@ -188,7 +183,7 @@ def history():
     for record in records:
         history_data.append({
             "image_name": record["image_name"],
-            "image_url": request.host_url + "uploads/" + record["image_name"],
+            "image_url": request.host_url.rstrip("/") + "/uploads/" + record["image_name"],
             "detected_alphabet": record["detected_alphabet"],
             "timestamp": record["timestamp"].strftime("%Y-%m-%d %H:%M:%S")
         })
