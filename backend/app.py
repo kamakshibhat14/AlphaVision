@@ -15,16 +15,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "alphabet_secret_key")
 
-app.config.update(
-    SESSION_COOKIE_SAMESITE="None",
-    SESSION_COOKIE_SECURE=True
-)
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True   
 
 CORS(
     app,
     supports_credentials=True,
     origins=[
-        "https://alphavision.vercel.app"   # 👈 your Vercel URL
+        "http://localhost:3000",
+        "https://frontend-alphavision.onrender.com"
     ]
 )
 
