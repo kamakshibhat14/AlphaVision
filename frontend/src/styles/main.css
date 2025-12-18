@@ -455,11 +455,13 @@ button:hover {
     .history-table th:nth-child(4),
     .history-table td:nth-child(4) {
         width: 34%;
-        font-size: 12px;
+        font-size: 13px;
         line-height: 1.35;
         word-break: break-word;
     }
+
 }
+
 
 @media (max-width: 768px) {
     .navbar {
