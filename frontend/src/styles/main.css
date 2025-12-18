@@ -356,6 +356,36 @@ button:hover {
     }
 }
 
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 14px 20px;
+        gap: 10px;
+    }
+
+    .navbar-logo {
+        font-size: 1.8rem;
+        justify-content: center;
+    }
+
+    .navbar-menu {
+        width: 100%;
+        justify-content: center;
+        gap: 22px;
+    }
+
+    .navbar-menu a {
+        font-size: 1.05rem;
+    }
+
+    .nav-logout {
+        margin-top: 6px;
+        width: auto;
+        padding: 8px 22px;
+        align-self: center;
+    }
+}
+
 .navbar {
     align-items: center;
 }
@@ -431,12 +461,24 @@ button:hover {
     }
 }
 
-.history-card {
-    max-width: 100%;
-    padding-left: 6px;
-    padding-right: 6px;
-}
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 8px;
+    }
 
+    .navbar-menu {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    .nav-logout {
+        position: absolute;
+        right: 0;
+    }
+}
 
 @media (max-width: 768px) {
 
@@ -474,7 +516,21 @@ button:hover {
     }
 }
 
+@media (max-width: 768px) {
+    .history-card {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
 
+    .history-table {
+        width: 100%;
+        min-width: 100%;
+    }
 
-
+    .history-table th,
+    .history-table td {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
 
