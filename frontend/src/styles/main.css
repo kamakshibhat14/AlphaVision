@@ -271,31 +271,31 @@ button:hover {
     }
 
     .navbar-logo {
-        width: 100%;
-        font-size: 1.6rem;
-        justify-content: center;
-        margin-bottom: 6px;
-    }
-
-
-    .navbar-menu {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 18px;
-        position: static;
-        margin-top: 4px;
-    }
-
-
-    .nav-logout {
-        position: static;
-        transform: none;
-        padding: 6px 14px;
-        font-size: 0.85rem;
-        border-radius: 6px;
-    }
+            width: 100%;
+            font-size: 1.8rem;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        
+        .navbar-menu {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            position: static;
+            margin-top: 4px;
+         }
+        
+        
+        .nav-logout {
+            position: static;
+            transform: none;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+         }
 
 
     .content-wrapper {
