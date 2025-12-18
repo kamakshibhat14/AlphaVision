@@ -36,6 +36,14 @@ cd frontend
 npm install
 npm start
 
+## 🚀 Live Deployment
+
+### Frontend (React – Render)
+https://alphavision-frontend.onrender.com
+
+### Backend (Flask – Render)
+https://alphavision-backend.onrender.com
+
 
 
 
