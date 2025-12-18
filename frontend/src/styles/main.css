@@ -564,3 +564,33 @@ button:hover {
     white-space: pre-line;
   }
 }    
+
+
+@media (max-width: 768px) {
+
+  /* Hide desktop datetime text on mobile */
+  .desktop-datetime {
+    display: none;
+  }
+
+  /* Inject clean Date + Time (once only) */
+  .history-datetime::before {
+    content: attr(data-date) "\A" attr(data-time);
+    white-space: pre-line;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    line-height: 1.4;
+  }
+
+  /* Increase Date & Time column header size */
+  .history-table th:nth-child(4) {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+}
+
+
+
+
+
