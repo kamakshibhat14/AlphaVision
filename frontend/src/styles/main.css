@@ -326,6 +326,19 @@ button:hover {
     font-size: 18px;
     color: #4f46e5;
 }
+@media (max-width: 768px) {
+  .history-table td:last-child {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 768px) {
+  .history-table td:last-child {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
 
 @media (max-width: 900px) {
     .login-container {
