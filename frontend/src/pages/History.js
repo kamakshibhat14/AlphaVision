@@ -64,9 +64,11 @@ function History() {
                   <td
                     data-date={h.timestamp.split(" ")[0]}
                     data-time={h.timestamp.split(" ")[1]}
+                    className="history-datetime"
                   >
-                    {h.timestamp}
+                    <span className="desktop-datetime">{h.timestamp}</span>
                   </td>
+
 
                 </tr>
               ))}
