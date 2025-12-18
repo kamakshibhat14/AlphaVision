@@ -49,27 +49,28 @@ function History() {
               {history.map((h, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>
-                    <a href={h.image_url} target="_blank" rel="noopener noreferrer">
-                      <img
-                        src={h.image_url}
-                        alt={h.image_name}
-                        style={{ width: "80px", borderRadius: "6px" }}
-                      />
-                    </a>
-                  </td>
+                   <td>
+                      <a
+                        href={h.image_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={h.image_url}
+                          alt={h.image_name}
+                          className="history-thumb"
+                        />
+                      </a>
+                    </td>
 
-
-                  <td>{h.detected_alphabet}</td>
-                  <td
-                    data-date={h.timestamp.split(" ")[0]}
-                    data-time={h.timestamp.split(" ")[1]}
-                    className="history-datetime"
-                  >
-                    <span className="desktop-datetime">{h.timestamp}</span>
-                  </td>
-
-
+                    <td>{h.detected_alphabet}</td>
+                    <td
+                      data-date={h.timestamp.split(" ")[0]}
+                      data-time={h.timestamp.split(" ")[1]}
+                      className="history-datetime"
+                    >
+                      <span className="desktop-datetime">{h.timestamp}</span>
+                    </td>
                 </tr>
               ))}
             </tbody>
