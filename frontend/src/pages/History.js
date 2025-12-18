@@ -50,27 +50,15 @@ function History() {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
-                    <a
-                      href={`${api.defaults.baseURL}${h.image_url}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ textDecoration: "none", color: "#4f46e5" }}
-                    >
+                    <a href={h.image_url} target="_blank" rel="noopener noreferrer">
                       <img
-                        src={`${api.defaults.baseURL}${h.image_url}`}
+                        src={h.image_url}
                         alt={h.image_name}
-                        style={{
-                          width: "60px",
-                          height: "60px",
-                          objectFit: "cover",
-                          borderRadius: "8px",
-                          display: "block",
-                          marginBottom: "6px",
-                        }}
+                        style={{ width: "80px", borderRadius: "6px" }}
                       />
-                      <span>{h.image_name}</span>
                     </a>
                   </td>
+
 
                   <td>{h.detected_alphabet}</td>
                   <td>{h.timestamp}</td>
