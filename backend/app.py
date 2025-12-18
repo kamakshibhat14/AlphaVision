@@ -7,6 +7,8 @@ from datetime import datetime
 from database import users_collection, detections_collection
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import send_from_directory
+
 
 # --------------------------------------------------
 # Flask App Configuration
@@ -149,6 +151,10 @@ def detect_alphabet(image_path):
         return "Unknown"
 
 
+@app.route("/uploads/<filename>")
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
+
 # --------------------------------------------------
 # Alphabet Detection API
 # --------------------------------------------------
@@ -187,7 +193,6 @@ def detect():
 # --------------------------------------------------
 # Detection History API
 # --------------------------------------------------
-
 @app.route("/history", methods=["GET"])
 def history():
     if "user" not in session:
@@ -199,6 +204,7 @@ def history():
     for record in records:
         history_data.append({
             "image_name": record["image_name"],
+            "image_url": f"/uploads/{record['image_name']}",
             "detected_alphabet": record["detected_alphabet"],
             "timestamp": record["timestamp"].strftime("%Y-%m-%d %H:%M:%S")
         })
