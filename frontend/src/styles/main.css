@@ -480,5 +480,41 @@ button:hover {
     }
 }
 
+@media (max-width: 768px) {
+
+    /* Navbar: Detect & History center, Logout right */
+    .navbar {
+        flex-direction: column;
+        padding-bottom: 8px;
+    }
+
+    .navbar-menu {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        margin-top: 6px;
+    }
+
+    .nav-logout {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 6px 14px;
+        font-size: 0.85rem;
+        border-radius: 6px;
+    }
+
+    /* Remove extra gap above Detection History */
+    .content-wrapper {
+        padding-top: 16px;
+    }
+
+    .history-card {
+        margin-top: 0;
+    }
+}
+
 
 
