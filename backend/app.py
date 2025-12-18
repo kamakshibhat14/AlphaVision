@@ -78,26 +78,37 @@ def logout():
 
 def detect_alphabet(image_path):
     from PIL import Image
-    import numpy as np
+    import os
+    try:
+        img = Image.open(image_path).convert("L")
+        width, height = img.size
+        aspect_ratio = width / height
+        pixels = list(img.getdata())
+        avg_brightness = sum(pixels) / len(pixels)
+        file_size_kb = os.path.getsize(image_path) / 1024
 
-    img = Image.open(image_path).convert("L")
-    width, height = img.size
-    aspect_ratio = width / height
+        score = 0
+        if aspect_ratio > 1.2:
+            score += 5
+        elif aspect_ratio < 0.8:
+            score += 10
 
-    pixels = np.array(img)
-    avg_brightness = pixels.mean()
-    contrast = pixels.std()
+        if avg_brightness > 180:
+            score += 3
+        elif avg_brightness < 100:
+            score += 7
 
-    alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        if file_size_kb > 200:
+            score += 4
+        elif file_size_kb < 50:
+            score += 8
 
-    # Rule buckets (simulation)
-    ratio_bucket = int(aspect_ratio * 10) % 7
-    brightness_bucket = int(avg_brightness // 20)
-    contrast_bucket = int(contrast // 15)
+        alphabets = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        return alphabets[score % 26]
 
-    rule_index = (ratio_bucket + brightness_bucket + contrast_bucket) % 26
+    except:
+        return "Unknown"
 
-    return alphabets[rule_index]
 
 
 @app.route("/detect", methods=["POST"])
