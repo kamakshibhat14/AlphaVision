@@ -38,7 +38,7 @@ function History() {
           <table className="history-table">
             <thead>
               <tr>
-                <th>#</th>
+                <th>ID</th>
                 <th>Image Name</th>
                 <th>Detected Alphabet</th>
                 <th>Date & Time</th>
