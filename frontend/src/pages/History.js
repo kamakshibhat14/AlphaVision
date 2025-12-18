@@ -49,7 +49,29 @@ function History() {
               {history.map((h, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{h.image_name}</td>
+                  <td>
+                    <a
+                      href={`${api.defaults.baseURL}${h.image_url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ textDecoration: "none", color: "#4f46e5" }}
+                    >
+                      <img
+                        src={`${api.defaults.baseURL}${h.image_url}`}
+                        alt={h.image_name}
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                          display: "block",
+                          marginBottom: "6px",
+                        }}
+                      />
+                      <span>{h.image_name}</span>
+                    </a>
+                  </td>
+
                   <td>{h.detected_alphabet}</td>
                   <td>{h.timestamp}</td>
                 </tr>
