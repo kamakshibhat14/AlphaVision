@@ -568,12 +568,12 @@ button:hover {
 
 @media (max-width: 768px) {
 
-  /* Hide desktop datetime text on mobile */
+
   .desktop-datetime {
     display: none;
   }
 
-  /* Inject clean Date + Time (once only) */
+  
   .history-datetime::before {
     content: attr(data-date) "\A" attr(data-time);
     white-space: pre-line;
@@ -583,10 +583,27 @@ button:hover {
     line-height: 1.4;
   }
 
-  /* Increase Date & Time column header size */
   .history-table th:nth-child(4) {
     font-size: 1.05rem;
     font-weight: 600;
+  }
+}
+.history-thumb {
+  width: 70px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.history-thumb:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .history-thumb {
+    width: 55px;
   }
 }
 
