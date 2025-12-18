@@ -398,8 +398,64 @@ button:hover {
 .nav-logout {
     margin-top: 0;
     align-self: center;
-    font-size: inherit;
+    font-size: 1rem;
+    font-weight: 500;
 }
+
+.navbar-logo span:first-child {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+    }
+
+    .navbar-menu {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .nav-logout {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .history-card {
+        padding: 20px 10px;
+    }
+
+    .history-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .history-table th,
+    .history-table td {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    .history-table th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        background: #ffffff;
+        padding-top: 20px;
+    }
+}
+
+
+
+
 
 
 
