@@ -398,4 +398,46 @@ button:hover {
     margin-top: 0;
     align-self: center;
 }
+.navbar {
+    position: relative;
+    flex-wrap: nowrap;
+}
+
+.navbar-logo {
+    flex-shrink: 0;
+}
+
+.navbar-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-logout {
+    margin-left: auto;
+    font-size: 1.05rem;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 14px 16px;
+    }
+
+    .navbar-logo {
+        font-size: 1.8rem;
+    }
+
+    .navbar-menu {
+        gap: 18px;
+    }
+
+    .navbar-menu a {
+        font-size: 1.05rem;
+    }
+
+    .nav-logout {
+        padding: 8px 18px;
+        font-size: 1.05rem;
+    }
+}
 
