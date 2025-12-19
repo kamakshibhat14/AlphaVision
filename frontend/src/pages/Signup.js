@@ -5,11 +5,11 @@ import api from "../services/api";
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const navigate = useNavigate();
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
 
   const handleSignup = async () => {
     if (!emailRegex.test(email)) {
