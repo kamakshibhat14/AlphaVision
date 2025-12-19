@@ -9,6 +9,7 @@ function Signup() {
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleSignup = async () => {
     if (!emailRegex.test(email)) {
