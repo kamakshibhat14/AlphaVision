@@ -6,16 +6,22 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
 
   const handleSignup = async () => {
+    if (!passwordRegex.test(password)) {
+      alert(
+        "Password must contain letters, numbers, and special characters"
+      );
+      return;
+    }
+  
     try {
       await api.post("/signup", { email, password });
       alert("Signup successful. Please login.");
       navigate("/");
     } catch (err) {
-      alert(
-        err.response?.data?.message || "Signup failed"
-      );
+      alert(err.response?.data?.message || "Signup failed");
     }
   };
 
