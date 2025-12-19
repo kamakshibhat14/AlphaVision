@@ -80,8 +80,9 @@ def detect_alphabet(image_path):
     if img is None:
         return "Unknown"
 
+    img = cv2.resize(img, (400, 400))
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    blur = cv2.GaussianBlur(gray, (5,5), 0)
     _, thresh = cv2.threshold(
         blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
     )
@@ -95,20 +96,20 @@ def detect_alphabet(image_path):
     cnt = max(contours, key=cv2.contourArea)
     area = cv2.contourArea(cnt)
     x, y, w, h = cv2.boundingRect(cnt)
-    aspect = w / h if h != 0 else 0
+    aspect = w / h if h else 0
 
     hull = cv2.convexHull(cnt)
     hull_area = cv2.contourArea(hull)
-    solidity = area / hull_area if hull_area != 0 else 0
+    solidity = area / hull_area if hull_area else 0
 
-    if area < 22000:
+    if area < 25000:
         if solidity > 0.9 and 0.9 < aspect < 1.1:
             return "O"
         if aspect < 0.35:
             return "I"
         if 0.55 < aspect < 0.8:
             return "A"
-        if aspect > 1.5:
+        if aspect > 1.6:
             return "L"
         if solidity < 0.6:
             return "X"
@@ -116,6 +117,10 @@ def detect_alphabet(image_path):
             return "C"
         if solidity > 0.85 and aspect > 1.2:
             return "D"
+        if solidity < 0.5 and aspect < 1:
+            return "Y"
+        if solidity > 0.8 and aspect < 0.8:
+            return "U"
         return "E"
 
     hull_idx = cv2.convexHull(cnt, returnPoints=False)
@@ -148,6 +153,7 @@ def detect_alphabet(image_path):
         return "L"
 
     return "Unknown"
+
 
 @app.route("/detect", methods=["POST"])
 def detect():
