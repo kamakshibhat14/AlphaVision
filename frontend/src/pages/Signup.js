@@ -8,17 +8,25 @@ function Signup() {
   const navigate = useNavigate();
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
   const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const handleSignup = async () => {
+    if (!emailRegex.test(email)) {
+      setEmailError("Enter a valid email address");
+      return;
+    }
+  
     if (!passwordRegex.test(password)) {
+      setEmailError("");
       setPasswordError(
         "Password must contain letters, numbers, and special characters"
       );
       return;
     }
   
+    setEmailError("");
     setPasswordError("");
-    
+  
     try {
       await api.post("/signup", { email, password });
       alert("Signup successful. Please login.");
@@ -27,6 +35,7 @@ function Signup() {
       alert(err.response?.data?.message || "Signup failed");
     }
   };
+
 
   return (
     <div className="login-container">
@@ -44,6 +53,12 @@ function Signup() {
   <div className="login-right">
         <div className="login-card">
         <h2>Create Account</h2>
+
+        {emailError && (
+          <p style={{ color: "red", fontSize: "13px", marginBottom: "8px" }}>
+            ! {emailError}
+          </p>
+        )}
 
         <input
             type="email"
