@@ -3,13 +3,19 @@ import api from "../services/api";
 import "../styles/main.css";
 import { useNavigate } from "react-router-dom";
 
-
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    if (!passwordRegex.test(password)) {
+      alert(
+        "Password must contain letters, numbers, and special characters"
+      );
+      return;
+    }
+  
     try {
       await api.post("/login", { email, password });
       onLogin(true);
@@ -30,8 +36,6 @@ function Login({ onLogin }) {
         </div>
       </div>
 
-
-      {/* RIGHT SECTION */}
       <div className="login-right">
         <div className="login-card">
           <h2>Sign In</h2>
