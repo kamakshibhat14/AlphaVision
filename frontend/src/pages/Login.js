@@ -22,7 +22,7 @@ function Login({ onLogin }) {
     setAuthError("");
   
     try {
-      await api.post("/login", { email, password });
+      await api.post("/login", { email, password }, { withCredentials: true });
       onLogin(true);
     } catch {
       setAuthError("Email or password do not match");
