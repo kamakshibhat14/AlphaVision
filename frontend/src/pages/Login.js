@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [authError, setAuthError] = useState("");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -19,16 +18,7 @@ function Login({ onLogin }) {
       return;
     }
   
-    if (!passwordRegex.test(password)) {
-      setEmailError("");
-      setPasswordError(
-        "Password must contain letters, numbers, and special characters"
-      );
-      return;
-    }
-  
     setEmailError("");
-    setPasswordError("");
     setAuthError("");
   
     try {
@@ -74,12 +64,6 @@ function Login({ onLogin }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
-          {passwordError && (
-            <p style={{ color: "red", fontSize: "13px", marginTop: "8px" }}>
-              ! {passwordError}
-            </p>
-          )}
 
           <input
             type="password"
