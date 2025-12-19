@@ -29,7 +29,7 @@ function Signup() {
     setPasswordError("");
   
     try {
-      await api.post("/signup", { email, password });
+      await api.post("/signup", { email, password }, { withCredentials: true });
       alert("Signup successful. Please login.");
       navigate("/");
     } catch (err) {
