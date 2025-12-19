@@ -8,15 +8,23 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
+  const [passwordError, setPasswordError] = useState("");
 
   const handleLogin = async () => {
     if (!passwordRegex.test(password)) {
-      alert(
+      setPasswordError(
         "Password must contain letters, numbers, and special characters"
       );
       return;
     }
   
+    setPasswordError("");
+    {passwordError && (
+      <p style={{ color: "red", fontSize: "13px", marginTop: "8px" }}>
+        ! {passwordError}
+      </p>
+    )}
+
     try {
       await api.post("/login", { email, password });
       onLogin(true);
@@ -24,6 +32,7 @@ function Login({ onLogin }) {
       alert("Invalid credentials");
     }
   };
+
 
   return (
     <div className="login-container">
