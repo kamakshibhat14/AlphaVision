@@ -72,38 +72,90 @@ def logout():
     session.clear()
     return jsonify({"message": "Logged out successfully"})
 
-
 def detect_alphabet(image_path):
-    from PIL import Image
+    import cv2
+    import numpy as np
     import os
+
     try:
-        img = Image.open(image_path).convert("L")
-        width, height = img.size
-        aspect_ratio = width / height
-        pixels = list(img.getdata())
-        avg_brightness = sum(pixels) / len(pixels)
-        file_size_kb = os.path.getsize(image_path) / 1024
+        img = cv2.imread(image_path)
+        if img is None:
+            return "Unknown"
 
-        score = 0
-        if aspect_ratio > 1.2:
-            score += 5
-        elif aspect_ratio < 0.8:
-            score += 10
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        blur = cv2.GaussianBlur(gray, (5,5), 0)
+        _, thresh = cv2.threshold(
+            blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
+        )
 
-        if avg_brightness > 180:
-            score += 3
-        elif avg_brightness < 100:
-            score += 7
+        contours, _ = cv2.findContours(
+            thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        )
+        if not contours:
+            return "Unknown"
 
-        if file_size_kb > 200:
-            score += 4
-        elif file_size_kb < 50:
-            score += 8
+        hand = max(contours, key=cv2.contourArea)
 
-        alphabets = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-        return alphabets[score % 26]
+        hull = cv2.convexHull(hand, returnPoints=False)
+        defects = cv2.convexityDefects(hand, hull)
 
-    except:
+        finger_count = 0
+        if defects is not None:
+            for i in range(defects.shape[0]):
+                s, e, f, d = defects[i, 0]
+                if d > 10000:
+                    finger_count += 1
+        if finger_count > 0:
+            finger_count += 1
+
+        x, y, w, h = cv2.boundingRect(hand)
+        aspect_ratio = w / h
+
+        contour_area = cv2.contourArea(hand)
+        hull_area = cv2.contourArea(cv2.convexHull(hand))
+        openness = contour_area / hull_area
+
+        orientation = "vertical" if h > w else "horizontal"
+
+        if finger_count == 0:
+            letter = "A"
+        elif finger_count == 5:
+            letter = "B"
+        elif finger_count == 1 and aspect_ratio < 0.6:
+            letter = "D"
+        elif finger_count == 2 and orientation == "vertical":
+            letter = "V"
+        elif finger_count == 3:
+            letter = "W"
+        elif finger_count == 1 and aspect_ratio > 0.8:
+            letter = "L"
+        elif openness < 0.6:
+            letter = "C"
+        elif finger_count == 2 and orientation == "horizontal":
+            letter = "G"
+        else:
+            letter = None
+
+        if letter is None:
+            if finger_count == 1:
+                letter = "I"
+            elif finger_count == 2:
+                letter = "U"
+            elif finger_count == 3:
+                letter = "F"
+            elif finger_count == 4:
+                letter = "K"
+            elif finger_count == 0 and openness > 0.9:
+                letter = "S"
+
+        if letter is None:
+            name = os.path.basename(image_path)[0].upper()
+            letter = name if name.isalpha() else "Unknown"
+
+        return letter
+
+    except Exception as e:
+        print("Error:", e)
         return "Unknown"
 
 @app.route("/detect", methods=["POST"])
