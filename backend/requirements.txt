@@ -4,3 +4,4 @@ pymongo
 gunicorn
 werkzeug
 pillow
+opencv-python-headless
