@@ -9,22 +9,35 @@ function Login({ onLogin }) {
   const navigate = useNavigate();
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
   const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [authError, setAuthError] = useState("");
 
   const handleLogin = async () => {
+    if (!emailRegex.test(email)) {
+      setEmailError("Enter a valid email address");
+      return;
+    }
+  
     if (!passwordRegex.test(password)) {
+      setEmailError("");
       setPasswordError(
         "Password must contain letters, numbers, and special characters"
       );
       return;
     }
-    
+  
+    setEmailError("");
+    setPasswordError("");
+    setAuthError("");
+  
     try {
       await api.post("/login", { email, password });
       onLogin(true);
     } catch {
-      alert("Invalid credentials");
+      setAuthError("Email or password do not match");
     }
   };
+
 
   return (
     <div className="login-container">
@@ -41,6 +54,18 @@ function Login({ onLogin }) {
       <div className="login-right">
         <div className="login-card">
           <h2>Sign In</h2>
+
+          {authError && (
+            <p style={{ color: "red", fontSize: "13px", marginBottom: "8px" }}>
+              ! {authError}
+            </p>
+          )}
+          
+          {emailError && (
+            <p style={{ color: "red", fontSize: "13px", marginBottom: "8px" }}>
+              ! {emailError}
+            </p>
+          )}
 
           <input
             type="text"
