@@ -607,6 +607,17 @@ button:hover {
   }
 }
 
+.history-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.history-table td a {
+  display: inline-block;
+}
 
 
 
