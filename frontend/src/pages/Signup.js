@@ -7,15 +7,18 @@ function Signup() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
+  const [passwordError, setPasswordError] = useState("");
 
   const handleSignup = async () => {
     if (!passwordRegex.test(password)) {
-      alert(
+      setPasswordError(
         "Password must contain letters, numbers, and special characters"
       );
       return;
     }
   
+    setPasswordError("");
+    
     try {
       await api.post("/signup", { email, password });
       alert("Signup successful. Please login.");
@@ -38,7 +41,6 @@ function Signup() {
     </div>
   </div>
 
-  {/* RIGHT SIDE FORM */}
   <div className="login-right">
         <div className="login-card">
         <h2>Create Account</h2>
@@ -49,6 +51,12 @@ function Signup() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
         />
+
+        {passwordError && (
+          <p style={{ color: "red", fontSize: "13px", marginTop: "8px" }}>
+            ! {passwordError}
+          </p>
+        )}
 
         <input
             type="password"
