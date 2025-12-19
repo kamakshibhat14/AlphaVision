@@ -75,88 +75,79 @@ def logout():
 def detect_alphabet(image_path):
     import cv2
     import numpy as np
-    import os
 
-    try:
-        img = cv2.imread(image_path)
-        if img is None:
-            return "Unknown"
-
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        blur = cv2.GaussianBlur(gray, (5,5), 0)
-        _, thresh = cv2.threshold(
-            blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
-        )
-
-        contours, _ = cv2.findContours(
-            thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
-        )
-        if not contours:
-            return "Unknown"
-
-        hand = max(contours, key=cv2.contourArea)
-
-        hull = cv2.convexHull(hand, returnPoints=False)
-        defects = cv2.convexityDefects(hand, hull)
-
-        finger_count = 0
-        if defects is not None:
-            for i in range(defects.shape[0]):
-                s, e, f, d = defects[i, 0]
-                if d > 10000:
-                    finger_count += 1
-        if finger_count > 0:
-            finger_count += 1
-
-        x, y, w, h = cv2.boundingRect(hand)
-        aspect_ratio = w / h
-
-        contour_area = cv2.contourArea(hand)
-        hull_area = cv2.contourArea(cv2.convexHull(hand))
-        openness = contour_area / hull_area
-
-        orientation = "vertical" if h > w else "horizontal"
-
-        if finger_count == 0:
-            letter = "A"
-        elif finger_count == 5:
-            letter = "B"
-        elif finger_count == 1 and aspect_ratio < 0.6:
-            letter = "D"
-        elif finger_count == 2 and orientation == "vertical":
-            letter = "V"
-        elif finger_count == 3:
-            letter = "W"
-        elif finger_count == 1 and aspect_ratio > 0.8:
-            letter = "L"
-        elif openness < 0.6:
-            letter = "C"
-        elif finger_count == 2 and orientation == "horizontal":
-            letter = "G"
-        else:
-            letter = None
-
-        if letter is None:
-            if finger_count == 1:
-                letter = "I"
-            elif finger_count == 2:
-                letter = "U"
-            elif finger_count == 3:
-                letter = "F"
-            elif finger_count == 4:
-                letter = "K"
-            elif finger_count == 0 and openness > 0.9:
-                letter = "S"
-
-        if letter is None:
-            name = os.path.basename(image_path)[0].upper()
-            letter = name if name.isalpha() else "Unknown"
-
-        return letter
-
-    except Exception as e:
-        print("Error:", e)
+    img = cv2.imread(image_path)
+    if img is None:
         return "Unknown"
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    _, thresh = cv2.threshold(
+        blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
+    )
+
+    contours, _ = cv2.findContours(
+        thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+    )
+    if not contours:
+        return "Unknown"
+
+    cnt = max(contours, key=cv2.contourArea)
+    area = cv2.contourArea(cnt)
+    x, y, w, h = cv2.boundingRect(cnt)
+    aspect = w / h if h != 0 else 0
+
+    hull = cv2.convexHull(cnt)
+    hull_area = cv2.contourArea(hull)
+    solidity = area / hull_area if hull_area != 0 else 0
+
+    if area < 22000:
+        if solidity > 0.9 and 0.9 < aspect < 1.1:
+            return "O"
+        if aspect < 0.35:
+            return "I"
+        if 0.55 < aspect < 0.8:
+            return "A"
+        if aspect > 1.5:
+            return "L"
+        if solidity < 0.6:
+            return "X"
+        if 0.8 < aspect < 1.2 and solidity < 0.85:
+            return "C"
+        if solidity > 0.85 and aspect > 1.2:
+            return "D"
+        return "E"
+
+    hull_idx = cv2.convexHull(cnt, returnPoints=False)
+    defects = cv2.convexityDefects(cnt, hull_idx)
+
+    fingers = 0
+    if defects is not None:
+        for i in range(defects.shape[0]):
+            _, _, _, d = defects[i][0]
+            if d > 10000:
+                fingers += 1
+    if fingers > 0:
+        fingers += 1
+
+    if fingers == 0:
+        return "A"
+    if fingers == 1:
+        return "D"
+    if fingers == 2:
+        return "V"
+    if fingers == 3:
+        return "W"
+    if fingers == 4:
+        return "K"
+    if fingers == 5:
+        return "B"
+    if solidity < 0.6:
+        return "C"
+    if aspect > 1.2:
+        return "L"
+
+    return "Unknown"
 
 @app.route("/detect", methods=["POST"])
 def detect():
