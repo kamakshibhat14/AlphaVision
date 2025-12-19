@@ -1,5 +1,3 @@
-print("APP.PY IS RUNNING")
-
 from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 from PIL import Image
@@ -9,7 +7,6 @@ import os
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import send_from_directory
 from flask import request
-
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "alphabet_secret_key")
@@ -45,11 +42,9 @@ def login():
     if not check_password_hash(user["password"], password):
         return jsonify({"error": "Invalid credentials"}), 401
 
-    # ✅ SESSION SET CORRECTLY
     session["user"] = email
 
     return jsonify({"message": "Login successful"})
-
 
 @app.route("/signup", methods=["POST"])
 def signup():
@@ -57,8 +52,11 @@ def signup():
     email = data.get("email")
     password = data.get("password")
 
+    if not email or not password:
+        return jsonify({"message": "Missing fields"}), 400
+
     if users_collection.find_one({"email": email}):
-        return jsonify({"error": "User already exists"}), 400
+        return jsonify({"message": "User already exists"}), 409
 
     hashed_password = generate_password_hash(password)
 
@@ -67,8 +65,7 @@ def signup():
         "password": hashed_password
     })
 
-    return jsonify({"message": "Signup successful"})
-
+    return jsonify({"message": "Signup successful"}), 201
 
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -109,8 +106,6 @@ def detect_alphabet(image_path):
     except:
         return "Unknown"
 
-
-
 @app.route("/detect", methods=["POST"])
 def detect():
     if "user" not in session:
@@ -145,7 +140,6 @@ def detect():
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-
 @app.route("/history", methods=["GET"])
 def history():
     if "user" not in session:
@@ -163,8 +157,6 @@ def history():
         })
 
     return jsonify(history_data)
-
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
