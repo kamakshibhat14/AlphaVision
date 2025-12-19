@@ -17,14 +17,7 @@ function Login({ onLogin }) {
       );
       return;
     }
-  
-    setPasswordError("");
-    {passwordError && (
-      <p style={{ color: "red", fontSize: "13px", marginTop: "8px" }}>
-        ! {passwordError}
-      </p>
-    )}
-
+    
     try {
       await api.post("/login", { email, password });
       onLogin(true);
@@ -32,7 +25,6 @@ function Login({ onLogin }) {
       alert("Invalid credentials");
     }
   };
-
 
   return (
     <div className="login-container">
@@ -56,6 +48,12 @@ function Login({ onLogin }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+
+          {passwordError && (
+            <p style={{ color: "red", fontSize: "13px", marginTop: "8px" }}>
+              ! {passwordError}
+            </p>
+          )}
 
           <input
             type="password"
